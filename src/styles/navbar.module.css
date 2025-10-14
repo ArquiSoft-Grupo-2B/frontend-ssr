@@ -1,0 +1,53 @@
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--padding-internal) 0;
+  width: 100%;
+  margin: 0 auto;
+  background: var(--color-light);
+  box-sizing: border-box;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  padding-left: var(--padding-lateral);
+}
+
+.logoLink {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+
+  gap: 0.5rem;
+}
+
+.logo img {
+  width: 50px;
+  height: 50px;
+}
+
+.logoText {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.navButtons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-right: var(--padding-lateral);
+}
+
+
+.profileImage {
+  width: 50px;           /* puedes ajustar el tamaño */
+  height: 50px;          /* importante que sea igual al width */
+  border-radius: 50%;    /* <-- esto la vuelve redonda */
+  object-fit: cover;     /* mantiene proporción sin deformarse */
+  cursor: pointer;       /* opcional: si quieres que parezca clickeable */
+}
+

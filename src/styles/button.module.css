@@ -1,0 +1,45 @@
+.button {
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 40px;
+  transition: background 0.2s ease;
+}
+
+/* Variantes */
+.primary {
+  background: var(--color-accent);
+  color: var(--color-light);
+  border: 2px var(--color-accent);
+}
+
+.primary:hover {
+  background: var(--color-accent-hover);
+}
+
+.secondary {
+  background: var(--color-light);
+  color: var(--color-dark);
+  border: 2px solid var(--color-dark);
+}
+
+.secondary:hover {
+  background: var(--color-dark);
+  color: var(--color-light);
+}
+
+/* Tamaños */
+.sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+}
+
+.md {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+}
+
+.lg {
+  padding: 0.8rem 1.6rem;
+  font-size: 1.1rem;
+}

@@ -1,0 +1,43 @@
+.profileContainer {
+  position: relative; /* necesario para que el popup se posicione respecto a este contenedor */
+  display: inline-block;
+}
+
+.profilePic img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.popupMenu {
+  position: absolute;
+  top: 100%; /* justo debajo de la imagen */
+  left: 0%;
+  transform: translateX(-50%);
+  background-color: var(--color-primary);
+  opacity: 0.85;
+  color: var(--color-light);
+  padding: 10px;
+  border-radius: 5px;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+  z-index: 100;
+  margin-top: 8px; /* pequeño espacio debajo de la imagen */
+}
+
+.popupMenu button {
+  background: none;
+  border: none;
+  color: var(--color-light);
+  text-align: center;
+  cursor: pointer;
+  padding: 10px 0;
+}
+
+.popupMenu button:hover {
+  opacity: 0.8;
+}
