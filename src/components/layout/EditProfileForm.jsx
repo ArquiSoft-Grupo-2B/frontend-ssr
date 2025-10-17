@@ -7,10 +7,10 @@ import SendFormButton from '@/components/ui/SendFormButton';
 import RedirectButton from '@/components/ui/RedirectButton';
 import styles from '@/styles/Form.module.css';
 // servicios
-import { fetchGraphQL } from "@/utils/graphql/fetchGraphQL";
+import { fetchGraphQL } from "@/services/graphql/fetchGraphQL";
 import { cookies } from 'next/headers';
-import { UPDATE_USER } from '@/utils/graphql/mutations/updateUser';
-import {GET_USER} from '@/utils/graphql/queries/getUser';
+import { UPDATE_USER } from '@/services/graphql/mutations/updateUser';
+import {GET_USER} from '@/services/graphql/queries/getUser';
 import { useRouter } from 'next/navigation'; // o 'next/router' según la versión
 
 export default function EditProfileForm({ initialUser, setPhoto }) {

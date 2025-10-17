@@ -7,8 +7,8 @@ import styles from "../../styles/form.module.css";
 import Link from "next/link";
 import { useAuth } from "@/contexts/useAuth";
 import { useState } from "react";
-import { fetchGraphQL } from "@/utils/graphql/fetchGraphQL";
-import { LOGIN_USER } from "@/utils/graphql/mutations/loginUser";
+import { fetchGraphQL } from "@/services/graphql/fetchGraphQL";
+import { LOGIN_USER } from "@/services/graphql/mutations/loginUser";
 
 export default function LoginForm() {
   const { login } = useAuth();
@@ -46,7 +46,7 @@ export default function LoginForm() {
 
       <SendFormButton label="Iniciar Sesión" testid="send-button" type={2} />
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {state.error && <p style={{ color: "red" }}>{error}</p>}
     </form>
   );
 }

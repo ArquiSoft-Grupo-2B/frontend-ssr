@@ -3,8 +3,8 @@ import FormField from '../ui/FormField';
 import SendFormButton from '../ui/SendFormButton';
 import styles from '../../styles/Form.module.css';
 import { Link } from "react-router-dom";
-import { fetchGraphQL } from "../../utils/graphql/fetchGraphQL";
-import { SEND_PASSWORD_RESET } from '../../utils/graphql/mutations/sendPasswordReset';
+import { fetchGraphQL } from "../../services/graphql/fetchGraphQL";
+import { SEND_PASSWORD_RESET } from '../../services/graphql/mutations/sendPasswordReset';
 import { useNavigate } from "react-router-dom";
 
 export default function RecoverEmailForm() {
