@@ -7,32 +7,40 @@ import SendFormButton from "../ui/SendFormButton";
 import styles from "../../styles/form.module.css";
 
 import { useState } from "react";
-
+import { apiClient } from "@/utils/apiClient"
+ 
 export default function RegistrationForm  () {
   const [ state, setState ] = useState({ error: null, success: null });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setState({ error: null, success: null });
+
     const email = e.target.email.value;
     const alias = e.target.alias.value;
     const password = e.target.password.value;
     const confirmPassword = e.target['confirm-password'].value;
-    
 
     if (password !== confirmPassword) {
       setState({ error: "Las contraseñas no coinciden" });
       return;
     }
 
-    const data = await fetchGraphQL(REGISTER_USER, { email, alias, password });
+    try {
+      const res = await apiClient("auth/register", "POST", { email, alias, password });
 
-    if (data?.data?.registerUser?.success) {
-      setState({ success: "Registro exitoso. Por favor, inicia sesión." });
-      window.location.href = '/login';
-    } else {
-      setState({ error: data?.registerUser?.message || "Error en el registro" });
+      if (res?.message) {
+        setState({ success: "Registro exitoso. Por favor, inicia sesión." });
+        await new Promise((r) => setTimeout(r, 1000));
+        window.location.href = '/login';
+      } else {
+        throw new Error(res?.errors?.[0]?.message || "Error en el registro");
+      }
+    } catch (err) {
+      setState({ error: err.message });
     }
   };
+
 
   return (
     <form

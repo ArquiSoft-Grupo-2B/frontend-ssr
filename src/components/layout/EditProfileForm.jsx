@@ -12,6 +12,7 @@ import { cookies } from 'next/headers';
 import { UPDATE_USER } from '@/services/graphql/mutations/updateUser';
 import {GET_USER} from '@/services/graphql/queries/getUser';
 import { useRouter } from 'next/navigation'; // o 'next/router' según la versión
+import { apiClient } from '@/utils/apiClient';
 
 export default function EditProfileForm({ initialUser, setPhoto }) {
   // campos de formulario
@@ -42,12 +43,28 @@ export default function EditProfileForm({ initialUser, setPhoto }) {
 
       if (!password.trim()) {
         try {
-          const response_update = await fetchGraphQL(UPDATE_USER, { email , alias });
-          if (response_update.errors?.[0]?.message) {
-            console.error(response_update.errors[0].message);
-            setError(response_update.errors[0].message);
-            return;
-          }
+          const response_update = await apiClient("auth/update", "PUT", {
+            email,
+            alias,
+          });
+
+            if (response_update.errors?.[0]?.message || response_update.status === 401 || response_update.statusCode === 401) {
+            const message = (response_update.status === 401 || response_update.statusCode === 401)
+              ? "Tienes que autenticarte nuevamente."
+              : response_update.errors[0].message;
+
+            console.error(message);
+            setError(message);
+
+            if (response_update.status === 401 || response_update.statusCode === 401) {
+              // Token inválido o expirado: limpiar token y redirigir al login en unos segundos
+              setTimeout(() => {
+              try { localStorage.removeItem("token"); } catch (e) {}
+              window.location.href = "/login";
+              }, 3000);
+            }
+            }
+          
           if (response_update.data) {
             setSuccess("Usuario logueado correctamente");
             navigate("/map");

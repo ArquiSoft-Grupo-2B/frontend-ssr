@@ -6,9 +6,29 @@ import PreviewPicture from '../components/ui/PreviewPicture';
 import EditProfileForm from '../components/layout/EditProfileForm';
 import UploadFileButton from '../components/ui/FileUploadButton';
 import styles from "../styles/form.module.css";
+import { apiClient } from '@/utils/apiClient';
 
 export default function ProfileView() {
   const [photo, setPhoto] = useState("/images/profile-placeholder.png");
+
+  const token = localStorage.getItem('token');
+  
+  if (!token) {
+    // Si no hay token, redirigir al login
+    if (typeof window !== 'undefined') {
+      window.location.href = '/login';
+    }
+    return null; // Evitar renderizado hasta la redirección
+  }
+
+  const verifyToken = apiClient('verify-token', 'GET', token);
+
+  if(!verifyToken) {
+    if (typeof window !== 'undefined') {
+      window.location.href = '/login';
+    }
+    return null;
+  }
 
   return (
     <div className={styles.spacer}>

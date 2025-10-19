@@ -19,19 +19,19 @@ export default function LoginForm() {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    const data = await fetchGraphQL(LOGIN_USER, { email, password });
-
-    if (data?.data?.loginUser?.idToken) {
-      const token = data.data.loginUser.idToken;
-      login(token); // Guarda en localStorage y contexto
-      window.location.href = '/map'; // Redirige a la página principal
-    } else {
-      if (data?.message) {
-        setState({ error: data.message });
-      } else {
-        setState({ error: "Error en el inicio de sesión" });
-      }
-    }
+    try {
+          const res = await apiClient("auth/auth", "POST", { email, password });
+    
+          if (res?.message) {
+            setState({ success: "Inicio de sesión exitoso." });
+            await new Promise((r) => setTimeout(r, 1000));
+            window.location.href = '/map';
+          } else {
+            throw new Error(res?.errors?.[0]?.message || "Error en el inicio de sesión");
+          }
+        } catch (err) {
+          setState({ error: err.message });
+        }
 
   };
 
@@ -46,7 +46,7 @@ export default function LoginForm() {
 
       <SendFormButton label="Iniciar Sesión" testid="send-button" type={2} />
 
-      {state.error && <p style={{ color: "red" }}>{error}</p>}
+      {state.error && <p style={{ color: "red" }}>{state.error}</p>}
     </form>
   );
 }

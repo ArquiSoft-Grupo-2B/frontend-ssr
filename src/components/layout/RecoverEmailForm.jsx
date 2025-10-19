@@ -1,43 +1,34 @@
-import React, { useState } from 'react';
+"use client";
+
+import { useState } from 'react';
 import FormField from '../ui/FormField';
 import SendFormButton from '../ui/SendFormButton';
 import styles from '../../styles/Form.module.css';
-import { Link } from "react-router-dom";
-import { fetchGraphQL } from "../../services/graphql/fetchGraphQL";
-import { SEND_PASSWORD_RESET } from '../../services/graphql/mutations/sendPasswordReset';
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 export default function RecoverEmailForm() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const onSubmit = async (e) => {
       e.preventDefault();
       setError(null);
       setSuccess(null);
   
-      if (!email.trim()) {
-        setError("Todos los campos son obligatorios");
-        return;
-      }
-  
       try {
-        const response = await fetchGraphQL(SEND_PASSWORD_RESET, { email });
-
-        console.log(response);
+        const response = await apiClient("auth/reset-pass", "GET", { email });
   
-        if (response.errors?.[0]?.message) {
-            console.error(response.errors[0].message);
-            setError(response.errors[0].message);
-            return;
+        if (response.error) {
+          setError(response.error);
+          return;
         }
-  
-        if (response.data) {
-          console.log(response.data);
-          setSuccess("Email enviado correctamente");
-        } 
+
+        setSuccess("Email enviado correctamente");
+        setTimeout(() => {
+          router.push("/login");
+        }, 1500);
   
       } catch (err) {
         console.error(err);

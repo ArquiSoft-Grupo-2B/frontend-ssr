@@ -22,22 +22,48 @@ export default function FullMap({ userLocation, setUserLocation, loadingLocation
   const [radius, setRadius] = useState(3000);
   const mapRef = useRef(null);
 
+  const readSafeJson = async (res) => {
+    try {
+      return await res.json();
+    } catch {
+      return null; // si no hay body o no es JSON
+    }
+  };
+
+
   const handleSearch = async () => {
     if (!userLocation) {
       setInfoMessage({ type: 'error', text: 'Ubicación no disponible' });
       return;
     }
+
     try {
       setInfoMessage({ type: 'info', text: 'Buscando rutas...' });
-      const res = await fetch(`/api/map?lat=${userLocation[1]}&lon=${userLocation[0]}&radius=${radius}`);
+      const res = await fetch(`/api/routes/near?lat=${userLocation[1]}&lng=${userLocation[0]}&radius=${radius}`);
+
+      const data = await readSafeJson(res);
+
       if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || 'Error buscando rutas');
+        const message =
+          data?.message ||
+          data?.error ||
+          data?.errors?.[0]?.message ||
+          `Error buscando rutas (HTTP ${res.status})`;
+
+        throw new Error(message);
       }
-      const data = await res.json();
+
+      if (!data) {
+        throw new Error("Respuesta vacía del servidor");
+      }
+
       setRoutes(data);
-      setInfoMessage({ type: 'success', text: `Se encontraron ${data.features?.length || 0} rutas.` });
+      setInfoMessage({
+        type: 'success',
+        text: `Se encontraron ${data.features?.length || 0} rutas.`,
+      });
     } catch (err) {
+      console.error("❌ Error en búsqueda de rutas:", err);
       setInfoMessage({ type: 'error', text: err.message });
     }
   };

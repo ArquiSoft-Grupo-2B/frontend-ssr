@@ -1,12 +1,8 @@
-"use client";
 // src/utils/graphql/fetchGraphQL.js
 
-export async function fetchGraphQL(query, variables = {}) {
-  const API_AUTH = process.env.NEXT_PUBLIC_API_AUTH_URL || "http://localhost:8000";
-  const endpoint = process.env.GRAPHQL_ENDPOINT || `${API_AUTH}/graphql`;
-
-  // Tomar token desde localStorage
-  const token = localStorage.getItem('authToken');
+export async function fetchGraphQL(query, variables = {}, token = null) {
+  const API_AUTH = process.env.API_AUTH_URL || "http://localhost:8000";
+  const endpoint = `${API_AUTH}/graphql`;
 
   // Preparar headers básicos
   const headers = {
@@ -17,7 +13,7 @@ export async function fetchGraphQL(query, variables = {}) {
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   } else {
-    console.warn("⚠️ No hay token en localStorage, la petición será sin autenticación");
+    console.warn("⚠️ No se encontró token en el localStorage, la petición será sin autenticación");
   }
 
   const res = await fetch(endpoint, {
