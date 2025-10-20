@@ -1,8 +1,9 @@
 // src/utils/apiClient.js
-export async function apiClient(endpoint, method = "POST", data = null) {
-  const token = typeof window !== "undefined"
+export async function apiClient(endpoint, method = "POST", data = null, tokenOverride = null) {
+  // 🔐 Usar el token que llega como parámetro, o el que está en localStorage
+  const token = tokenOverride ?? (typeof window !== "undefined"
     ? localStorage.getItem("authToken")
-    : null;
+    : null);
 
   const headers = {
     "Content-Type": "application/json",
@@ -20,22 +21,29 @@ export async function apiClient(endpoint, method = "POST", data = null) {
     options.body = JSON.stringify(data);
   }
 
-  const response = await fetch(`/api/${endpoint}`, options);
+  let response;
+  try {
+    response = await fetch(`/api/${endpoint}`, options);
+  } catch (err) {
+    throw new Error(`No se pudo conectar con el servidor: ${err.message}`);
+  }
 
   const text = await response.text();
-  
   let json;
 
   try {
     json = text ? JSON.parse(text) : {};
   } catch {
-    json = { raw: text }; // por si la respuesta no era JSON válido
+    json = { raw: text }; // por si la respuesta no es JSON válido
   }
 
-
+  // ⚠️ GraphQL puede devolver errores dentro del body aunque sea 200 OK
+  // Ejemplo: { data: { verifyToken: null }, errors: [{ message: "Invalid token" }] }
   if (!response.ok) {
-    throw new Error(json.errors[0]?.message || json.error ||`Request failed (${response.status})`);
+    // Error HTTP real (404, 500, etc.)
+    throw new Error(json.errors?.[0]?.message || json.error || `Request failed (${response.status})`);
   }
 
+  // Devuelve el JSON sin lanzar errores por "errors" de GraphQL
   return json;
 }

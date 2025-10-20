@@ -1,6 +1,7 @@
 .profileContainer {
   position: relative; /* necesario para que el popup se posicione respecto a este contenedor */
   display: inline-block;
+  padding-right: var(--padding-lateral);
 }
 
 .profilePic img {

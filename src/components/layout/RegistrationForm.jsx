@@ -10,16 +10,15 @@ import { useState } from "react";
 import { apiClient } from "@/utils/apiClient"
  
 export default function RegistrationForm  () {
+  const [ email , setEmail ] = useState("");
+  const [ alias , setAlias ] = useState("");
+  const [ password , setPassword ] = useState("");
+  const [ confirmPassword , setConfirmPassword ] = useState("");
   const [ state, setState ] = useState({ error: null, success: null });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setState({ error: null, success: null });
-
-    const email = e.target.email.value;
-    const alias = e.target.alias.value;
-    const password = e.target.password.value;
-    const confirmPassword = e.target['confirm-password'].value;
 
     if (password !== confirmPassword) {
       setState({ error: "Las contraseñas no coinciden" });
@@ -51,22 +50,26 @@ export default function RegistrationForm  () {
       <FormField
         label="Correo"
         testid="email"
-        name="email"
+        value={email}
+        setValue={setEmail}
       />
       <FormField
         label="Alias"
         testid="alias"
-        name="alias"
+        value={alias}
+        setValue={setAlias}
       />
       <PasswordField
         label="Contraseña"
         testid="password"
-        name="password"
+        value={password}
+        setValue={setPassword}
       />
       <PasswordField
         label="Confirmar Contraseña"
         testid="confirm-password"
-        name="confirm-password"
+        value={confirmPassword}
+        setValue={setConfirmPassword}
       />
       <SendFormButton label="Registrarse" testid="send-button" type={1} />
 

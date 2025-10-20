@@ -1,4 +1,4 @@
-import styles from "../../styles/PreviewPicture.module.css";
+import styles from "../../styles/preview-picture.module.css";
 import React from "react";
 import { useState, useEffect } from "react";
 

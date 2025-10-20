@@ -3,7 +3,7 @@
 import styles from "../../styles/password-field.module.css";
 import { useState } from "react";
 
-export default function PasswordField({ label, testid, name }) {
+export default function PasswordField({ label, testid, value, setValue }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -15,7 +15,8 @@ export default function PasswordField({ label, testid, name }) {
       <input
         type={showPassword ? "text" : "password"}
         className={styles.input}
-        name={name}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
         placeholder={label}
         data-testid={testid}
       />

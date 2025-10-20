@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "../../styles/SendFormButton.module.css";
+import styles from "../../styles/send-form-button.module.css";
 
 export default function FileUploadButton({label, accept, multiple, onFileSelect, testid, type}) {
     const [className, setClassName] = useState("");

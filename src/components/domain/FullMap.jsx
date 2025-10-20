@@ -20,7 +20,7 @@ export default function FullMap({ userLocation, setUserLocation, loadingLocation
   const [popupInfo, setPopupInfo] = useState(null);
   const [menuOpen, setMenuOpen] = useState(true);
   const [radius, setRadius] = useState(3000);
-  const mapRef = useRef(null);
+  const mapRef = useRef(null); 
 
   const readSafeJson = async (res) => {
     try {

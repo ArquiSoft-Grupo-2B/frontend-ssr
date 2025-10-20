@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import FormField from '../ui/FormField';
 import SendFormButton from '../ui/SendFormButton';
-import styles from '../../styles/Form.module.css';
+import styles from '../../styles/form.module.css';
 import { useRouter } from "next/navigation";
+import { apiClient } from '@/utils/apiClient';
 
 export default function RecoverEmailForm() {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ export default function RecoverEmailForm() {
       setSuccess(null);
   
       try {
-        const response = await apiClient("auth/reset-pass", "GET", { email });
+        const response = await apiClient("auth/reset-pass", "PUT", { email });
   
         if (response.error) {
           setError(response.error);

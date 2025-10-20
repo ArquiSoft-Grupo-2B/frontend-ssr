@@ -1,5 +1,5 @@
 import RecoverEmailForm from '../components/layout/RecoverEmailForm.jsx';
-import styles from "../styles/Form.module.css";
+import styles from "../styles/form.module.css";
 
 export default function SendEmailRecoverView() {
   return (

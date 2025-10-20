@@ -1,6 +1,6 @@
-import styles from "../../styles/SendFormButton.module.css";
+import styles from "../../styles/send-form-button.module.css";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 export default function RedirectButton({ label, testid, type, redirectTo }) {
   const [className, setClassName] = useState("");
@@ -18,7 +18,7 @@ export default function RedirectButton({ label, testid, type, redirectTo }) {
   }, [type]);
 
   return (
-    <Link to={redirectTo}>
+    <Link href={redirectTo}>
       <button className={className} data-testid={testid}>
         {label}
       </button>

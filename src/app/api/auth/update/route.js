@@ -7,17 +7,12 @@ export async function PUT(request) {
   try {
 
     const authHeader = request.headers.get("authorization");
+
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-
+    
     const token = authHeader.split(" ")[1];
-
-    const verifyResponse = await fetchGraphQL(VERIFY_TOKEN, { token });
-
-    if (verifyResponse.errors || !verifyResponse.data.verifyToken.valid) {
-      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
-    }
 
     const { email, password, alias } = await request.json();
 

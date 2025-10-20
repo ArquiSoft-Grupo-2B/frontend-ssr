@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useContext, useEffect } from 'react';
 // componentes de UI
 import FormField from '@/components/ui/FormField';
@@ -5,19 +6,14 @@ import DisabledField from '@/components/ui/DisabledField';
 import PasswordField from '@/components/ui/PasswordField';
 import SendFormButton from '@/components/ui/SendFormButton';
 import RedirectButton from '@/components/ui/RedirectButton';
-import styles from '@/styles/Form.module.css';
+import styles from '@/styles/form.module.css';
 // servicios
-import { fetchGraphQL } from "@/services/graphql/fetchGraphQL";
-import { cookies } from 'next/headers';
-import { UPDATE_USER } from '@/services/graphql/mutations/updateUser';
-import {GET_USER} from '@/services/graphql/queries/getUser';
 import { useRouter } from 'next/navigation'; // o 'next/router' según la versión
 import { apiClient } from '@/utils/apiClient';
 
 export default function EditProfileForm({ initialUser, setPhoto }) {
   // campos de formulario
-  const [idUser, setIdUser] = useState(initialUser?.id || "");
-  const [email, setEmail] = useState(initialUser?.email || "");
+  const email = initialUser?.email || "";
   const [alias, setAlias] = useState(initialUser?.alias || "");
   const [password, setPassword] = useState("");
   // respuesta del sistema
@@ -48,26 +44,17 @@ export default function EditProfileForm({ initialUser, setPhoto }) {
             alias,
           });
 
-            if (response_update.errors?.[0]?.message || response_update.status === 401 || response_update.statusCode === 401) {
-            const message = (response_update.status === 401 || response_update.statusCode === 401)
-              ? "Tienes que autenticarte nuevamente."
-              : response_update.errors[0].message;
-
-            console.error(message);
+          if (response_update.errors?.[0]?.message) {
+            const message = response_update.errors[0].message;
             setError(message);
-
-            if (response_update.status === 401 || response_update.statusCode === 401) {
-              // Token inválido o expirado: limpiar token y redirigir al login en unos segundos
-              setTimeout(() => {
-              try { localStorage.removeItem("token"); } catch (e) {}
-              window.location.href = "/login";
-              }, 3000);
-            }
-            }
+            return;
+          }
           
           if (response_update.data) {
-            setSuccess("Usuario logueado correctamente");
-            navigate("/map");
+            setSuccess("Usuario actualizado correctamente");
+            setTimeout(() => {
+              router.push("/map");
+            }, 1500);
           } 
   
         } catch (err) {
@@ -75,24 +62,24 @@ export default function EditProfileForm({ initialUser, setPhoto }) {
           setError("Hubo un error en la petición");
         }
       }
-      else{
+      else
+      {
         try {
-          const response_update = await fetchGraphQL(UPDATE_USER, {
-            email,
-            password,
-            alias,
-          });
+          const response_update = await apiClient("auth/update", "PUT", { email, password, alias });
+
   
-        if (response_update.errors?.[0]?.message) {
-            console.error(response_update.errors[0].message);
-            setError(response_update.errors[0].message);
-            return;
-        }
+          if (response_update.errors?.[0]?.message) {
+              console.error(response_update.errors[0].message);
+              setError(response_update.errors[0].message);
+              return;
+          }
   
-        if (response_update.data) {
-          setSuccess("Usuario logueado correctamente");
-          navigate("/map");
-        } 
+          if (response_update.data) {
+            setSuccess("Usuario actualizado correctamente");
+            setTimeout(() => {
+              router.push("/map");
+            }, 1500);
+          }
   
         } catch (err) {
           console.error(err);

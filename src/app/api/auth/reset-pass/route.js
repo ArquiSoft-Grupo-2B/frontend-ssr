@@ -2,7 +2,7 @@ import { fetchGraphQL } from "@/services/graphql/fetchGraphQL";
 import { SEND_PASSWORD_RESET } from "@/services/graphql/mutations/sendPasswordReset";
 import { NextResponse } from "next/server"
 
-export async function GET(request){
+export async function PUT(request){
     try {
 
         const { email } = await request.json();
