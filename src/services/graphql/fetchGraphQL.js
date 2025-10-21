@@ -1,8 +1,9 @@
 // src/utils/graphql/fetchGraphQL.js
 
 export async function fetchGraphQL(query, variables = {}, token = null) {
-  const API_AUTH = process.env.API_AUTH_URL || "http://localhost:8000";
-  const endpoint = `${API_AUTH}/graphql`;
+  const GATEWAY = process.env.API_GATEWAY
+  const ROUTE = process.env.AUTH_SERVICE
+  const endpoint = `${GATEWAY}/${ROUTE}`;
 
   // Preparar headers básicos
   const headers = {
