@@ -15,7 +15,7 @@ WORKDIR /app
 COPY --from=builder /app ./
 
 # Expone el puerto interno
-EXPOSE 3000
+EXPOSE 3001
 
 # Inicia el servidor de producción de Next.js
 CMD ["npm", "start"]

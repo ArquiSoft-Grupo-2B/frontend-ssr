@@ -9,6 +9,12 @@ export async function apiClient(endpoint, method = "POST", data = null, tokenOve
     "Content-Type": "application/json",
   };
 
+
+if (token && token !== "null" && token !== "undefined") {
+  headers["Authorization"] = `Bearer ${token}`;
+}
+
+
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
   const options = {
