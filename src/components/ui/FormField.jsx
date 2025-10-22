@@ -1,4 +1,4 @@
-"user client";
+"use client";
 import styles from "../../styles/form-field.module.css";
 import React from "react";
 

@@ -9,8 +9,9 @@ export async function fetchNearbyRoutes(lat, lng, radius = 5000) {
     throw new Error("Latitud y longitud son requeridos");
   }
 
-  const API_BASE= process.env.API_ROUTE_URL || "http://localhost:3000";
-  const endpoint = `${API_BASE}/routes/near?lat=${lat}&lng=${lng}&radius_m=${radius}`;
+  const GATEWAY = process.env.API_GATEWAY;
+  const ROUTE = process.env.ROUTES_SERVICE;
+  const endpoint = `${GATEWAY}/${ROUTE}/near?lat=${lat}&lng=${lng}&radius_m=${radius}`;
 
   const res = await fetch(endpoint, {
     method: "GET",

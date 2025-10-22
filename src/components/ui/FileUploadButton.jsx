@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import styles from "../../styles/send-form-button.module.css";
 
