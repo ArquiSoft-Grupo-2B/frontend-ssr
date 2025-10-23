@@ -1,0 +1,25 @@
+// src/services/routesService.js
+export async function fetchNearbyRoutes(lat, lng, radius = 5000) {
+  // Preparar headers básicos
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  if (!lat || !lng) {
+    throw new Error("Latitud y longitud son requeridos");
+  }
+
+  const GATEWAY = process.env.API_GATEWAY;
+  const ROUTE = process.env.ROUTES_SERVICE;
+  const endpoint = `${GATEWAY}/${ROUTE}/near?lat=${lat}&lng=${lng}&radius_m=${radius}`;
+
+  const res = await fetch(endpoint, {
+    method: "GET",
+    headers,
+    cache: "no-store",
+  });
+
+  const data = await res.json();
+
+  return data?.data || data; // Retorna FeatureCollection o lo que devuelva la API
+}

@@ -1,0 +1,47 @@
+.sendButtonPrimary {  
+    max-width: fit-content;
+    padding: 10px 20px;
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    border-radius: 10rem;
+}
+
+.sendButtonSecondary {  
+    max-width: fit-content;
+    padding: 10px 20px;
+    background-color: var(--color-accent);
+    color: var(--color-light);
+    border-radius: 10rem;
+}
+
+.sendButtonTertiary {  
+    max-width: fit-content;
+    padding: 10px 20px;
+    background-color: var(--color-secondary);
+    color: var(--color-light);
+    border-radius: 10rem;
+}
+
+.sendButtonPrimary:hover {
+    background-color: var(--color-primary-hover);
+    cursor: pointer;
+}
+
+.sendButtonSecondary:hover {
+    background-color: var(--color-accent-hover);
+    cursor: pointer;
+}
+
+.sendButtonTertiary:hover {
+    background-color: var(--color-secondary-hover);
+    cursor: pointer;
+}
+
+.sendButtonDisabled {  
+    max-width: fit-content;
+    padding: 10px 20px;
+    background-color: var(--color-dark-hover);
+    color: var(--color-light);
+    border-radius: 10rem;
+    cursor: not-allowed;
+}

@@ -1,0 +1,179 @@
+.container {
+  width: fit-content;
+  height: fit-content;
+  background-color: var(--color-light);
+}
+
+.main {
+  width: auto;
+  margin: 0 auto;
+  padding: 0 var(--padding-lateral);
+  padding-bottom: var(--padding-seccion);
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 0.8fr 0.2fr 1fr;
+  gap: 0rem;
+  justify-content: center;               /* centra todo el conjunto horizontalmente */
+  align-items: center;                   /* alinea verticalmente */
+  
+}
+
+
+
+/* Left Content */
+.leftContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.heroSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: var(--padding-seccion);
+}
+
+.heroTitle {
+  font-size: var(--font-size-h1);
+  font-weight: bold;
+  color: var(--color-dark);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.heroSubtitle {
+  font-size: var(--font-size-h4);
+  font-weight: 300;
+  color: var(--color-dark);
+  margin: 0;
+}
+
+.ctaButton {
+  background-color: var(--color-accent);
+  color: white;
+  padding: 0.75rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+
+/* Feature Section */
+.featureSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  padding-top: var(--padding-seccion);
+}
+
+.featureIcon {
+  flex-shrink: 0;
+}
+
+.featureText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: var(--padding-seccion) 1.5rem;
+}
+
+.featureTitle {
+  font-size: var(--font-size-h2);
+  font-weight: bold;
+  color: #1c1c1e;
+  margin: 0;
+}
+
+/* Central Content - Separator */
+
+.separator path {
+  stroke-dasharray: 12,12; /* puntos más largos */
+  stroke-dashoffset: 0;
+  animation: flow 2s linear infinite;
+}
+
+@keyframes flow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 24; /* mueve los puntos a lo largo de la línea */
+  }
+}
+
+.separator {
+  display: flex;           /* activa flexbox */
+  justify-content: center; /* centra horizontalmente */
+  align-items: center;     /* centra verticalmente */
+  height: 90%;            /* o la altura que necesites */
+}
+
+
+/* Right Content - Map */
+
+
+.rightContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Aligns all child elements to the right */
+  text-align: right;     /* Ensures text inside is right-aligned */
+}
+
+
+.smallMap {
+  max-width: 80%;  
+  max-height: 400px;
+  margin-right: 1rem;
+}
+
+
+.sideText {
+  position: relative;
+  padding: var(--padding-seccion) 1.5rem;
+  
+}
+
+.sideText p {
+  font-size: var(--font-size-h3);
+  font-weight: 500;
+  color: var(--color-dark);
+  line-height: 1.6;
+  margin: 0;
+  text-align: right;
+}
+
+@media (max-width: 1024px) {
+  .sideText {
+    position: static;
+    transform: none;
+    margin-top: 1rem;
+    right: auto;
+    top: auto;
+  }
+}
+
+/* Bottom Section */
+.bottomSection {
+  background-color: var(--color-primary);
+  padding: var(--padding-seccion) 0;
+}
+
+.bottomContent {
+  max-width: 1024px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+.bottomTitle {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: white;
+  line-height: 1.6;
+  margin: 0;
+}

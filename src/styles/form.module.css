@@ -1,0 +1,91 @@
+.container{
+    max-width: 40%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.view{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.spacer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 0;
+}
+
+.title{
+    text-align: center;
+    color: var(--color-primary);
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.title2{
+    text-align: center;
+    color: var(--color-accent);
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  margin-bottom: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
+.forgot_link{
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: var(--color-dark);
+    font-size: 0.875rem;
+    align-self: flex-end;
+}
+
+.redirect_text{
+    text-align: center;
+    margin-top: 40px;
+    font-weight: 600;
+    color: var(--color-dark);
+    font-size: 0.875rem;
+}
+
+.redirect_link{
+    text-align: center;
+    margin-top: 40px;
+    font-weight: 600;
+    color: var(--color-dark);
+    text-decoration: underline;
+    font-size: 0.875rem;
+}
+
+.buttonrow{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
+}
+
+@media (max-width: 768px) {
+    .container{
+        max-width: 60%;
+    }
+}
+
