@@ -1,15 +1,17 @@
-version: "3.9"
+version: '3.9'
 
 services:
   frontend:
     build: .
     container_name: runpath_frontend
     ports:
-      - "3001:3001"              
+      - '3001:3001'
     env_file:
       - .env
-  
+    networks:
+      - frontend_net
+
 networks:
-  default:
-    name: routes_shared_network
+  frontend_net:
     external: true
+  
