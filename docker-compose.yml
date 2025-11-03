@@ -14,4 +14,5 @@ services:
 networks:
   frontend_net:
     external: true
-  
+  orchestration_net:
+    external: true
