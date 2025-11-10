@@ -20,7 +20,42 @@ export default function FullMap({ userLocation, setUserLocation, loadingLocation
   const [popupInfo, setPopupInfo] = useState(null);
   const [menuOpen, setMenuOpen] = useState(true);
   const [radius, setRadius] = useState(3000);
-  const mapRef = useRef(null); 
+  const [timeTaken, setTimeTaken] = useState('');
+  const mapRef = useRef(null);
+
+  const handleCompleteRoute = async (routeId) => {
+    if (!timeTaken || isNaN(timeTaken) || timeTaken <= 0) {
+      setInfoMessage({ type: 'error', text: 'Por favor ingresa un tiempo válido en minutos' });
+      return;
+    }
+
+    try {
+      setInfoMessage({ type: 'info', text: 'Marcando ruta como completada...' });
+      const authToken = localStorage.getItem('authToken');
+      
+      const res = await fetch(`/api/routes/${routeId}/complete`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`
+        },
+        body: JSON.stringify({ timeTaken: Number(timeTaken) })
+      });
+
+      const data = await readSafeJson(res);
+
+      if (!res.ok) {
+        throw new Error(data?.error || `Error al completar la ruta (HTTP ${res.status})`);
+      }
+
+      setInfoMessage({ type: 'success', text: 'Ruta marcada como completada' });
+      setPopupInfo(null);
+      handleSearch(); // Recargar rutas
+    } catch (err) {
+      console.error("❌ Error al completar la ruta:", err);
+      setInfoMessage({ type: 'error', text: err.message });
+    }
+  };
 
   const readSafeJson = async (res) => {
     try {
@@ -210,7 +245,25 @@ export default function FullMap({ userLocation, setUserLocation, loadingLocation
               <br />
               Distancia: {popupInfo.distancia || "Distancia no disponible"}
               <br />
-              Duración: {popupInfo.duracion || "Duración no disponible"}
+              Duración estimada: {popupInfo.duracion || "Duración no disponible"}
+              <br />
+              <div className={styles.completeRouteForm}>
+                <input
+                  type="number"
+                  min="1"
+                  value={timeTaken}
+                  onChange={(e) => setTimeTaken(e.target.value)}
+                  placeholder="Tiempo real (minutos)"
+                  className={styles.timeInput}
+                />
+                <Button 
+                  onClick={() => handleCompleteRoute(popupInfo.id)}
+                  variant="primary"
+                  size="sm"
+                >
+                  Marcar como completada
+                </Button>
+              </div>
             </div>
           </Popup>
         )}
