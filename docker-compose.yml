@@ -4,6 +4,8 @@ services:
   frontend:
     build: .
     container_name: runpath_frontend
+    image: runpath_frontend
+
     env_file:
       - .env
     networks:
